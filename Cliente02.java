@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Cliente {
+public class Cliente02 {
     public static void main(String[] args) {
         Scanner Teclado = new Scanner(System.in);
         boolean sair = false;
