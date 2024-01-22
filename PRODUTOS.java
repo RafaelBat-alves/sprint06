@@ -58,14 +58,82 @@ public class PRODUTOS {
         }
 
         System.out.println(">>>>Listagem dos Produto");
-        Calendar calendario = Calendar.getInstance();
-        int data = calendario.get(Calendar.YEAR);
+       double Totalapagar = 0 ;
         for (int i =0;i<numero;i++) {
 
             System.out.println("_________________________________");
             System.out.println("Nome: " + nomedoproduto[i]);
             System.out.println("Data de Preco: " + precodoproduto[i]);
+            Totalapagar +=precodoproduto[i];
         }
+            
+             boolean sairDaFormaPagamento = false;
+             double faltaPagar =0;
+             while(!sairDaFormaPagamento){
+                 try{
+             System.out.println("FALTA A PAGAR: "+Totalapagar);
+             System.out.println("FORMA DE PAGAMENTO \n 1 DINHEIRO \n 2 CARTÃO \n 3 PIX \n 4 SAIR");
+             String formaDePagamento = Teclado.next();
+             int numerovaliado = Integer.parseInt(formaDePagamento);
+             if(numerovaliado >=1 || numerovaliado <=4 ){
+                 
+             if(numerovaliado==1){
+                 System.out.println("DINHEIRO");
+                 System.out.println("QUANTIDADE DE DINHEIRO DADO?");
+                 double dinheiro = Teclado.nextDouble();
+                 faltaPagar =Totalapagar - dinheiro ;
+                 if(faltaPagar<=0){
+                     System.out.println("SEU TROCO SERA: "+faltaPagar);
+                     Totalapagar = faltaPagar;
+                    sairDaFormaPagamento = true;
+                 }else{
+                    System.out.println("FALTA PAGAR "+faltaPagar);
+                    Totalapagar = faltaPagar;
+                 }
+
+              
+             }else if( numerovaliado ==2){
+                 System.out.println("CARTÃO");
+                 System.out.println("INSIRA O CARTÃO");
+                 System.out.println("DIGITA A SENHA DO CARTÃO");
+                 String senha = Teclado.next();
+                 //lembra de usar enum para coisa do tipo
+                 //String Regex = "([0-9])+\\.([0-9])+\\.([0-9])+-([0-9])+"; CPF
+
+                 String Regex = "(([0-9])+([0-9])+([0-9])+([0-9])+)";
+                 Pattern patt= Pattern.compile(Regex);
+                 Matcher match = patt.matcher(senha);
+                 if(match.find()){
+                   System.out.println("COMPRA APROVADA VOLTE SEMPRE");
+                   sairDaFormaPagamento = true;
+                 }else{
+                 System.out.println("SENHA INVALIDA");
+                 }
+
+                 
+
+               
+             }else if(numerovaliado == 3) {
+                 System.out.println("PIX");
+                 System.out.println("GERANDO QR CODE");
+               
+                     throw new NumberFormatException("ERRO NA HORA DE GERA QR CODE TENTE MAIS TARDE OUTRA FORMA DE PAGAMETO");
+              
+
+             }else if(numerovaliado == 4){
+                              sairDaFormaPagamento = true;}
+             
+             }else{
+                 System.err.println("FORMA INCOMPATIVEL");
+             }
+                 }catch(NumberFormatException  ex){
+                 ex.printStackTrace();
+                 System.out.println("ERRO NO PAGAMENTO ");
+
+                 }
+             
+             }
+             
 
     }
 }
